@@ -1,8 +1,6 @@
 # dotfiles
 My collection of dotfiles
 
-## zsh
-
-## bash
-
-## os x
+# June 2016
+* Updated .zshrc + first commit
+* Updated .tmux.conf + first commit
