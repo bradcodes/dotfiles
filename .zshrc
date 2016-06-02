@@ -1,14 +1,19 @@
+# .zshrc - github.com/bradleyschelling
 # Set the prompt to something more pleasing
-PS1='%B%F{magenta}%m %f%b%% '
-RPROMPT='%B%F{magenta}%~%f'
+PS1='%B%F{magenta}%m %f%b%# '
+RPROMPT='%B%F{cyan}%~%f (%!)'
+
+# Boring $PATH business:
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/bin:/usr/local/bin"
 
 # Navigation
-# z works by going into directories I've already visited.
-# h is right back to home!
+# Enable support for 'z'
 . `brew --prefix`/etc/profile.d/z.sh
 alias h="cd ~"
 alias up="cd .."
+
+# anybar functions
+function anybar { echo -n $1 | nc -4u -w0 localhost ${2:-1738}; }
 
 # Vim-style navigation
 bindkey -v
@@ -17,6 +22,7 @@ path+=('/usr/local/bin')
 export PATH
 
 # General purpose aliases
+# !!! To be cleaned up later
 alias ls="ls -fG"
 alias cl="clear; ls"
 alias psa="ps aux"
@@ -25,12 +31,20 @@ alias clp="clear;ls;pwd"
 alias p3="ping -c 3"
 alias treed="tree -Cd"
 alias tree="tree -C"
+alias tweet="rainbowstream"
 alias sf="clear; echo; archey"
+
 # Editing and sourcing .zshrc
 alias zedit="vim ~/.zshrc"
 alias zsource="source ~/.zshrc"
 
+# Git aliases
+alias glog="git log"
+alias gpretty="git log --pretty=oneline"
+alias ggraph="git log --graph --oneline --decorate --all"
+
 # open file in quicklook from cli
+# !!! This is still all wonky.  Need to find a better solution.
 alias ql="qlmanage -p"
 
 # Move and follow file to new dir:
@@ -51,6 +65,16 @@ function cpf {
   elif [[ -d ${*[-1]%/*} ]]; then
     cp $* && cd ${*[-1]%/*}
   fi
+}
+
+# Change to whatever directory the Finder is in
+cdf() {
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+        cd "$target"; pwd
+    else
+        echo 'No Finder window found' >&2
+    fi
 }
 
 # Use alt+s to insert sudo
