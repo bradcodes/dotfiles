@@ -23,6 +23,12 @@ export PATH
 
 # General purpose aliases
 # !!! To be cleaned up later
+
+# Brew aliases
+alias bupdate="brew update"
+alias bupgrade="brew upgrade"
+alias cask="brew cask"
+
 alias ls="ls -fG"
 alias cl="clear; ls"
 alias psa="ps aux"
@@ -33,12 +39,14 @@ alias treed="tree -Cd"
 alias tree="tree -C"
 alias tweet="rainbowstream"
 alias sf="clear; echo; archey"
+alias mem='top -l1 | grep PhysMem'
 
 # Editing and sourcing .zshrc
 alias zedit="vim ~/.zshrc"
 alias zsource="source ~/.zshrc"
 
 # Git aliases
+alias g="git"
 alias glog="git log"
 alias gpretty="git log --pretty=oneline"
 alias ggraph="git log --graph --oneline --decorate --all"
