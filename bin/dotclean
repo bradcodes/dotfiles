@@ -1,0 +1,8 @@
+#!/bin/bash
+# Cleanup ~/dotfiles by organizing
+# each file into it's appropriate subdirectory.
+
+# ~/dotfiles/bin
+mv ~/dotfiles/sysinfo.sh ~/dotfiles/bin
+mv ~/dotfiles/dotcopy ~/dotfiles/bin
+

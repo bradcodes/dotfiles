@@ -1,0 +1,14 @@
+#!/bin/bash
+
+grn="\e[32;1m"
+
+# Copy dotfiles to ~/dotfiles
+echo 'dotcopy (alpha)'
+echo 
+echo -e $grn'Copying files.'
+cp ~/.zshrc ~/dotfiles/
+cp ~/.tmux.conf ~/dotfiles/
+cp ~/.vimrc ~/dotfiles/
+cp ~/bin/* ~/dotfiles/bin
+echo -e $grn'Copy complete.'
+echo

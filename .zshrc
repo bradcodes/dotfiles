@@ -1,36 +1,38 @@
-# .zshrc - github.com/bradleyschelling
+# .zshrc - github.com/bradcodes
+
 # Set the prompt to something more pleasing
-PS1='%B%F{magenta}%m %f%b%# '
-RPROMPT='%B%F{cyan}%~%f (%!)'
+#PROMPT="%{$fg_bold[black]%}%(! %{$fg_bold[red]%} )>%{$fg_bold[black]%}%(1j %{$fg_bold[green]%} )>%{$fg_bold[black]%}%(?  %{$fg_bold[red]%})>%{$reset_color%} "
+PS1='%F{green}%m %f%b%# '
+RPROMPT='%F{pink}%~%f (%!)'
 
 # Boring $PATH business:
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/bin:/usr/local/bin"
+eval `dircolors -b $HOME/.dir_colors`
 
-# Navigation
-# Enable support for 'z'
-. `brew --prefix`/etc/profile.d/z.sh
 alias h="cd ~"
 alias up="cd .."
 
-# anybar functions
-function anybar { echo -n $1 | nc -4u -w0 localhost ${2:-1738}; }
+# Distro agnostic package systems.
+alias apt-get="sudo apt-get"
+alias pacman='sudo pacman'
+alias xi='sudo xbps-install'
+alias apt='sudo apt'
 
-# Vim-style navigation
+# Taskbook specific
+alias ctb='clear; tb'
+alias ctbi='clear; tb -i'
+
+# vim-style navigation
 bindkey -v
 bindkey -M viins ‘jk’ vi-cmd-mode
 path+=('/usr/local/bin')
 export PATH
 
 # General purpose aliases
-# !!! To be cleaned up later
-
-# Brew aliases
-alias bupdate="brew update"
-alias bupgrade="brew upgrade"
-alias cask="brew cask"
-
-alias ls="ls -fG"
+alias f='fzf'
+alias ls="ls --color=auto"
 alias cl="clear; ls"
+alias vi='vim'
 alias psa="ps aux"
 alias kk="uname -mrs"
 alias clp="clear;ls;pwd"
@@ -38,22 +40,40 @@ alias p3="ping -c 3"
 alias treed="tree -Cd"
 alias tree="tree -C"
 alias tweet="rainbowstream"
-alias sf="clear; echo; archey"
+alias sf="clear; sysinfo"
+alias sfa='clear; echo; neofetch; echo;'
 alias mem='top -l1 | grep PhysMem'
+alias cat='bat'
+alias dfc='clear; echo; dfc -Ms; echo;'
+
+# For fun.
+alias q='clear; quote; echo'
+alias cow='clear; fortune | cowsay; echo'
+alias tree='alder'
 
 # Editing and sourcing .zshrc
 alias zedit="vim ~/.zshrc"
+alias zmouse="mousepad ~/.zshrc"
 alias zsource="source ~/.zshrc"
 
 # Git aliases
-alias g="git"
+#alias g="git"
 alias glog="git log"
 alias gpretty="git log --pretty=oneline"
 alias ggraph="git log --graph --oneline --decorate --all"
 
-# open file in quicklook from cli
-# !!! This is still all wonky.  Need to find a better solution.
-alias ql="qlmanage -p"
+# Pomodoro
+# function to start a timer in bg / pomodoro
+alias pomo='doro'
+function doro () {
+    if [[ $# == 0 ]]; then
+        let duration=1500           # no arguments -> 25 minutes
+    else
+        let duration=$(($1*60))
+    fi
+    sleep $duration
+    (osascript -e 'tell application "System Events" to display dialog "Time for a water break!" buttons "OK" default button "OK"' && say "time up. STOP") &
+}
 
 # Move and follow file to new dir:
 # Example (from ~) mvf test.txt ~/downloads will move the file
@@ -92,4 +112,4 @@ zle -N insert-sudo insert_sudo
 bindkey "^[s" insert-sudo
 
 # Must be last in .zshrc
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
